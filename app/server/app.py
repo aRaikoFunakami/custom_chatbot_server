@@ -9,7 +9,7 @@ import logging
 
 from pydantic import BaseModel
 
-from app.models.simple_conversation_chat import SimpleConversationChat
+from app.models.simple_conversation_chat import AccessmineChat
 from app.models.summary_conversation_chat import SummaryConversationChat
 
 logging.basicConfig(level=logging.INFO)
@@ -61,7 +61,7 @@ async def models():
     return {
         "data": [
             {
-                "id": "simple-conversation-chat",
+                "id": "acsmine-chat",
                 "object": "model",
                 "owned_by": "organization-owner"
             },
@@ -82,8 +82,8 @@ async def chat_completions(completion_request: CompletionRequest):
     history_messages = completion_request.messages[:-1]
     user_message = completion_request.messages[-1]
 
-    if completion_request.model == "simple-conversation-chat":
-        chat = SimpleConversationChat(history_messages)
+    if completion_request.model == "acsmine-chat":
+        chat = AccessmineChat(history_messages)
     elif completion_request.model == "summary-conversation-chat":
         chat = SummaryConversationChat(history_messages)
     else:

@@ -15,7 +15,7 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from collections import defaultdict
 
 
-class SimpleConversationChat:
+class AccessmineChat:
     def __init__(self, history):
         self.memory = ConversationBufferMemory(return_messages=True)
         self.set_memory(history)
