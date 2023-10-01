@@ -1,7 +1,7 @@
 import threading
 
 from langchain import OpenAI, ConversationChain
-from langchain.callbacks import CallbackManager
+from langchain.callbacks.manager import CallbackManager
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationSummaryMemory
 

@@ -42,20 +42,18 @@ async def streaming_response(json_data, chat_generator):
         "delta": {"content": ''}
     }]
 
-    # logging.info(f"Sending initial JSON: {json_without_choices}")
-    yield f"data: {json.dumps(json_without_choices)}\n\n"  # NOTE: EventSource
-
     text = ""
     for chunk in chat_generator:
         text += chunk
         json_data["choices"][0]["delta"] = {"content": chunk}
-        # logging.info(f"Sending chunk: {json.dumps(json_data)}")
+        json_data["choices"][0]["finish_reason"] = None
+        #logging.info(f"Sending chunk: {json.dumps(json_data)}")
         yield f"data: {json.dumps(json_data)}\n\n"  # NOTE: EventSource
 
-    json_data["choices"][0]["text"] = text
-    logging.info(f"reply: {text}")
+    json_data["choices"][0]["text"] = ""
+    json_data["choices"][0]["finish_reason"] = "stop"
+    #logging.info(f"last2: {json.dumps(json_data)}")
     yield f"data: {json.dumps(json_data)}\n\n"  # NOTE: EventSource
-    yield f"data: [DONE]\n\n"  # NOTE: EventSource
 
 
 @app.get("/v1/models")
